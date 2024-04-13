@@ -12,47 +12,47 @@ namespace AcademicGuard.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PersonasController : ControllerBase
+    public class CoordinadorController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
 
-        public PersonasController(ApplicationDbContext context)
+        public CoordinadorController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/Personas
+        // GET: api/Coordinador
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Persona>>> GetPersonas()
+        public async Task<ActionResult<IEnumerable<Coordinador>>> GetCoordinador()
         {
-            return await _context.Personas.ToListAsync();
+            return await _context.Coordinador.ToListAsync();
         }
 
-        // GET: api/Personas/5
+        // GET: api/Coordinador/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Persona>> GetPersona(int id)
+        public async Task<ActionResult<Coordinador>> GetCoordinador(int id)
         {
-            var persona = await _context.Personas.FindAsync(id);
+            var coordinador = await _context.Coordinador.FindAsync(id);
 
-            if (persona == null)
+            if (coordinador == null)
             {
                 return NotFound();
             }
 
-            return persona;
+            return coordinador;
         }
 
-        // PUT: api/Personas/5
+        // PUT: api/Coordinador/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPersona(int id, Persona persona)
+        public async Task<IActionResult> PutCoordinador(int id, Coordinador coordinador)
         {
-            if (id != persona.Id_persona)
+            if (id != coordinador.Id_coordinador)
             {
                 return BadRequest();
             }
 
-            _context.Entry(persona).State = EntityState.Modified;
+            _context.Entry(coordinador).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +60,7 @@ namespace AcademicGuard.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PersonaExists(id))
+                if (!CoordinadorExists(id))
                 {
                     return NotFound();
                 }
@@ -73,36 +73,36 @@ namespace AcademicGuard.Controllers
             return NoContent();
         }
 
-        // POST: api/Personas
+        // POST: api/Coordinador
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Persona>> PostPersona(Persona persona)
+        public async Task<ActionResult<Coordinador>> PostCoordinador(Coordinador coordinador)
         {
-            _context.Personas.Add(persona);
+            _context.Coordinador.Add(coordinador);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetPersona", new { id = persona.Id_persona }, persona);
+            return CreatedAtAction("GetCoordinador", new { id = coordinador.Id_coordinador }, coordinador);
         }
 
-        // DELETE: api/Personas/5
+        // DELETE: api/Coordinador/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePersona(int id)
+        public async Task<IActionResult> DeleteCoordinador(int id)
         {
-            var persona = await _context.Personas.FindAsync(id);
-            if (persona == null)
+            var coordinador = await _context.Coordinador.FindAsync(id);
+            if (coordinador == null)
             {
                 return NotFound();
             }
 
-            _context.Personas.Remove(persona);
+            _context.Coordinador.Remove(coordinador);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool PersonaExists(int id)
+        private bool CoordinadorExists(int id)
         {
-            return _context.Personas.Any(e => e.Id_persona == id);
+            return _context.Coordinador.Any(e => e.Id_coordinador == id);
         }
     }
 }

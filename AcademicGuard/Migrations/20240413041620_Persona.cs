@@ -40,11 +40,39 @@ namespace AcademicGuard.Migrations
                     table.PrimaryKey("PK_Personas", x => x.Id_persona);
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "DetallePersona",
+                columns: table => new
+                {
+                    Id_detalle_persona = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    Id_persona = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DetallePersona", x => x.Id_detalle_persona);
+                    table.ForeignKey(
+                        name: "FK_DetallePersona_Personas_Id_persona",
+                        column: x => x.Id_persona,
+                        principalTable: "Personas",
+                        principalColumn: "Id_persona",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DetallePersona_Id_persona",
+                table: "DetallePersona",
+                column: "Id_persona");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "DetallePersona");
+
             migrationBuilder.DropTable(
                 name: "Personas");
         }

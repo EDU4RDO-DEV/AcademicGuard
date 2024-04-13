@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AcademicGuard.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240412075642_Persona")]
-    partial class Persona
+    [Migration("20240413041626_DetallePersona")]
+    partial class DetallePersona
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,6 +21,22 @@ namespace AcademicGuard.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "8.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
+
+            modelBuilder.Entity("AcademicGuard.Models.DetallePersona", b =>
+                {
+                    b.Property<int>("Id_detalle_persona")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("Id_persona")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id_detalle_persona");
+
+                    b.HasIndex("Id_persona");
+
+                    b.ToTable("DetallePersona");
+                });
 
             modelBuilder.Entity("AcademicGuard.Models.Persona", b =>
                 {
@@ -79,6 +95,17 @@ namespace AcademicGuard.Migrations
                     b.HasKey("Id_persona");
 
                     b.ToTable("Personas");
+                });
+
+            modelBuilder.Entity("AcademicGuard.Models.DetallePersona", b =>
+                {
+                    b.HasOne("AcademicGuard.Models.Persona", "Persona")
+                        .WithMany()
+                        .HasForeignKey("Id_persona")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Persona");
                 });
 #pragma warning restore 612, 618
         }
