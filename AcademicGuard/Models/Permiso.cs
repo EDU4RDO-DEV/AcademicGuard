@@ -20,8 +20,8 @@ namespace AcademicGuard.Models
         public DateTime Fecha_solicitud { get; set; }
         public DateTime Fecha_respuesta { get; set; }
 
-        public Estudiante Estudiante { get; set; }
-        public Profesor Profesor { get; set; }
-        public Coordinador Coordinador { get; set; }
+        //public Estudiante Estudiante { get; set; }
+        //public Profesor Profesor { get; set; }
+        //public Coordinador Coordinador { get; set; }
     }
 }

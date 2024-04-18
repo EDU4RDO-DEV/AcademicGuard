@@ -13,6 +13,6 @@ namespace AcademicGuard.Models
         public string Especialidad { get; set; }
         public string Fecha_contratacion { get; set; }
 
-        public Persona Persona { get; set; }
+        //public Persona Persona { get; set; }
     }
 }

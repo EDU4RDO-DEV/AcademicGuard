@@ -16,8 +16,8 @@ namespace AcademicGuard.Models
         public string Nombre_curso { get; set; }
         public string Descripcion { get; set; }
 
-        public Profesor Profesor { get; set; }
-        public Estudiante Estudiante { get; set; }
-        public Coordinador Coordinador { get; set; }
+        //public Profesor Profesor { get; set; }
+        //public Estudiante Estudiante { get; set; }
+        //public Coordinador Coordinador { get; set; }
     }
 }

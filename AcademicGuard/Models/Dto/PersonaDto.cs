@@ -1,13 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace AcademicGuard.Models
+﻿namespace AcademicGuard.Models.Dto
 {
-    public class Persona
+    public class PersonaDto
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id_persona { get; set; }
         public string Dpi { get; set; }
         public string Primer_nombre { get; set; }
         public string Segundo_nombre { get; set; }
