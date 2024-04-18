@@ -15,8 +15,8 @@ namespace AcademicGuard.Models
         public int Id_coordinador { get; set; }
         public char Estado { get; set; }
 
-        public Estudiante Estudiante { get; set; }
-        public Profesor Profesor { get; set; }
-        public Coordinador Coordinador { get; set; }
+        //public Estudiante Estudiante { get; set; }
+        //public Profesor Profesor { get; set; }
+        //public Coordinador Coordinador { get; set; }
     }
 }

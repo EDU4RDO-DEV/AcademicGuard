@@ -11,6 +11,6 @@ namespace AcademicGuard.Models
         public int Id_usuario { get; set; }
         public string Tipo_rol { get; set; }
 
-        public Usuario Usuario { get; set; }
+        //public Usuario Usuario { get; set; }
     }
 }

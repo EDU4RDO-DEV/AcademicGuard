@@ -17,6 +17,6 @@ namespace AcademicGuard.Models
         public string Departamento { get; set; }
         public string Codigo_postal { get; set; }
 
-        public DetallePersona DetallePersona { get; set; }
+        //public DetallePersona DetallePersona { get; set; }
     }
 }

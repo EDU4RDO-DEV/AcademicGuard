@@ -12,6 +12,6 @@ namespace AcademicGuard.Models
         public string Correo_institucional { get; set; }
         public string Contraseña { get; set; }
 
-        public DetallePersona DetallePersona { get; set; }
+        //public DetallePersona DetallePersona { get; set; }
     }
 }

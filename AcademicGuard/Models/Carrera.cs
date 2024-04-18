@@ -16,7 +16,7 @@ namespace AcademicGuard.Models
         public string Duracion { get; set; }
         public bool Carrera_habilitada { get; set; }
 
-        public Curso Curso { get; set; }
-        public Coordinador Coordinador { get; set; }
+        //public Curso Curso { get; set; }
+        //public Coordinador Coordinador { get; set; }
     }
 }

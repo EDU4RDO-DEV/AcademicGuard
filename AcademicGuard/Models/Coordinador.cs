@@ -14,6 +14,6 @@ namespace AcademicGuard.Models
         public string Fecha_contratacion { get; set; }
         public string Periodo_mandato { get; set; }
 
-        public Persona Persona { get; set; }
+        //public Persona Persona { get; set; }
     }
 }

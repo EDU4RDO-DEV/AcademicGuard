@@ -14,6 +14,6 @@ namespace AcademicGuard.Models
         public int Numero_estudiantes { get; set; }
         public string Seccion_habilitada { get; set; }
 
-        public Curso Curso { get; set; }
+        //public Curso Curso { get; set; }
     }
 }
