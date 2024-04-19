@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AcademicGuard.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240413055208_Usuario")]
-    partial class Usuario
+    [Migration("20240419035358_PasswordModeloUsuarioCorregido")]
+    partial class PasswordModeloUsuarioCorregido
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

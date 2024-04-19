@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace AcademicGuard.Models
 {
@@ -16,7 +17,9 @@ namespace AcademicGuard.Models
         public string Duracion { get; set; }
         public bool Carrera_habilitada { get; set; }
 
-        //public Curso Curso { get; set; }
-        //public Coordinador Coordinador { get; set; }
+        [JsonIgnore]
+        public Curso Curso { get; set; }
+        [JsonIgnore]
+        public Coordinador Coordinador { get; set; }
     }
 }

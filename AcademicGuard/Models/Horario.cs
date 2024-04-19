@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace AcademicGuard.Models
 {
@@ -14,6 +15,7 @@ namespace AcademicGuard.Models
         public TimeSpan Hora_fin { get; set; }
         public bool Horario_habilitado { get; set; }
 
-        //public Curso Curso { get; set; }
+        [JsonIgnore]
+        public Curso Curso { get; set; }
     }
 }

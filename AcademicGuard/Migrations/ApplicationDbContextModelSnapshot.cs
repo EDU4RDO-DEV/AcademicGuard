@@ -501,7 +501,7 @@ namespace AcademicGuard.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("Contraseña")
+                    b.Property<string>("Clave")
                         .IsRequired()
                         .HasColumnType("longtext");
 

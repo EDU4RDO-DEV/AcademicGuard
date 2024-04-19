@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AcademicGuard.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240413055208_Usuario")]
-    partial class Usuario
+    [Migration("20240419034527_LlavesForaneasActivadas")]
+    partial class LlavesForaneasActivadas
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -504,7 +504,7 @@ namespace AcademicGuard.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("Clave")
+                    b.Property<string>("Contraseña")
                         .IsRequired()
                         .HasColumnType("longtext");
 

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace AcademicGuard.Models
 {
@@ -13,6 +14,7 @@ namespace AcademicGuard.Models
         public string Especialidad { get; set; }
         public string Fecha_contratacion { get; set; }
 
-        //public Persona Persona { get; set; }
+        [JsonIgnore]
+        public Persona Persona { get; set; }
     }
 }

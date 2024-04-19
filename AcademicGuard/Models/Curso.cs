@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace AcademicGuard.Models
 {
@@ -16,8 +17,11 @@ namespace AcademicGuard.Models
         public string Nombre_curso { get; set; }
         public string Descripcion { get; set; }
 
-        //public Profesor Profesor { get; set; }
-        //public Estudiante Estudiante { get; set; }
-        //public Coordinador Coordinador { get; set; }
+        [JsonIgnore]
+        public Profesor Profesor { get; set; }
+        [JsonIgnore]
+        public Estudiante Estudiante { get; set; }
+        [JsonIgnore]
+        public Coordinador Coordinador { get; set; }
     }
 }
