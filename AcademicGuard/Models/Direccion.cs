@@ -18,7 +18,7 @@ namespace AcademicGuard.Models
         public string Departamento { get; set; }
         public string Codigo_postal { get; set; }
 
-        [JsonIgnore]
-        public DetallePersona DetallePersona { get; set; }
+        //[JsonIgnore]
+        //public DetallePersona DetallePersona { get; set; }
     }
 }

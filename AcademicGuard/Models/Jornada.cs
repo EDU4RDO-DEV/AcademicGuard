@@ -13,7 +13,7 @@ namespace AcademicGuard.Models
         public string Tipo_jornada { get; set; }
         public bool Jornada_habilitada { get; set; }
 
-        [JsonIgnore]
-        public Curso Curso { get; set; }
+        //[JsonIgnore]
+        //public Curso Curso { get; set; }
     }
 }

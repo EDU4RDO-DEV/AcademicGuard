@@ -12,7 +12,7 @@ namespace AcademicGuard.Models
         public int Id_persona { get; set; }
         public int Año_ingreso { get; set; }
 
-        [JsonIgnore]
-        public Persona Persona { get; set; }
+        //[JsonIgnore]
+        //public Persona Persona { get; set; }
     }
 }

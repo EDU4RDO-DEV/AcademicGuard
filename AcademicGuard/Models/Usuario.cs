@@ -13,7 +13,7 @@ namespace AcademicGuard.Models
         public string Correo_institucional { get; set; }
         public string Clave { get; set; }
 
-        [JsonIgnore] 
-        public DetallePersona DetallePersona { get; set; }
+        //[JsonIgnore] 
+        //public DetallePersona DetallePersona { get; set; }
     }
 }

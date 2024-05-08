@@ -19,7 +19,8 @@ namespace AcademicGuard.Models
 
         [JsonIgnore]
         public Curso Curso { get; set; }
-        [JsonIgnore]
-        public Coordinador Coordinador { get; set; }
+
+        //[JsonIgnore]
+        //public Coordinador Coordinador { get; set; }
     }
 }

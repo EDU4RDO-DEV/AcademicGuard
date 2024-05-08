@@ -11,7 +11,7 @@ namespace AcademicGuard.Models
         [ForeignKey("Persona")]
         public int Id_persona { get; set; }
 
-        [JsonIgnore]
-        public Persona Persona { get; set; }
+        //[JsonIgnore]
+        //public Persona Persona { get; set; }
     }
 }

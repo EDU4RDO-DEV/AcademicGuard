@@ -15,7 +15,7 @@ namespace AcademicGuard.Models
         public TimeSpan Hora_fin { get; set; }
         public bool Horario_habilitado { get; set; }
 
-        [JsonIgnore]
-        public Curso Curso { get; set; }
+        //[JsonIgnore]
+        //public Curso Curso { get; set; }
     }
 }
