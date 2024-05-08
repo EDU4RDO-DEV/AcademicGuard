@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AcademicGuard.DataContext;
 using AcademicGuard.Models;
+using AcademicGuard.Models.Dto;
 
 namespace AcademicGuard.Controllers
 {
@@ -45,12 +46,23 @@ namespace AcademicGuard.Controllers
         // PUT: api/Asistencia/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAsistencia(int id, Asistencia asistencia)
+        public async Task<IActionResult> PutAsistencia(int id, AsistenciaDto asistenciaDto)
         {
-            if (id != asistencia.Id_asistencia)
+            if (id != asistenciaDto.Id_asistencia)
             {
                 return BadRequest();
             }
+
+            var asistencia = new Asistencia
+            {
+                Id_asistencia = asistenciaDto.Id_asistencia,
+                Id_estudiante = asistenciaDto.Id_estudiante,
+                Id_profesor = asistenciaDto.Id_profesor,
+                Id_coordinador = asistenciaDto.Id_coordinador,
+                Estado = asistenciaDto.Estado,
+                Asitencia = asistenciaDto.Asitencia,
+                Fecha = asistenciaDto.Fecha
+            };
 
             _context.Entry(asistencia).State = EntityState.Modified;
 
@@ -76,8 +88,18 @@ namespace AcademicGuard.Controllers
         // POST: api/Asistencia
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Asistencia>> PostAsistencia(Asistencia asistencia)
+        public async Task<ActionResult<Asistencia>> PostAsistencia(AsistenciaDto asistenciaDto)
         {
+            var asistencia = new Asistencia
+            {
+                Id_estudiante = asistenciaDto.Id_estudiante,
+                Id_profesor = asistenciaDto.Id_profesor,
+                Id_coordinador = asistenciaDto.Id_coordinador,
+                Estado = asistenciaDto.Estado,
+                Asitencia = asistenciaDto.Asitencia,
+                Fecha = asistenciaDto.Fecha
+            };
+
             _context.Asistencia.Add(asistencia);
             await _context.SaveChangesAsync();
 
@@ -106,3 +128,4 @@ namespace AcademicGuard.Controllers
         }
     }
 }
+

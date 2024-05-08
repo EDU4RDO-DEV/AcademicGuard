@@ -7,6 +7,7 @@ namespace AcademicGuard.Models
     public class Asistencia
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id_asistencia { get; set; }
         [ForeignKey("Estudiante")]
         public int Id_estudiante { get; set; }
@@ -14,14 +15,18 @@ namespace AcademicGuard.Models
         public int Id_profesor { get; set; }
         [ForeignKey("Coordinador")]
         public int Id_coordinador { get; set; }
-        public char Estado { get; set; }
+        public string Estado { get; set; }
+        public string Asitencia { get; set; }
+        public DateTime Fecha { get; set; }
+
 
         [JsonIgnore]
         public Estudiante Estudiante { get; set; }
+
         [JsonIgnore]
         public Profesor Profesor { get; set; }
 
-        //[JsonIgnore]
-        //public Coordinador Coordinador { get; set; }
+        [JsonIgnore]
+        public Coordinador Coordinador { get; set; }
     }
 }

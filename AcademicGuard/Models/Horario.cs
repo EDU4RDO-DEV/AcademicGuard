@@ -7,6 +7,7 @@ namespace AcademicGuard.Models
     public class Horario
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id_horario { get; set; }
         [ForeignKey("Curso")]
         public int Id_curso { get; set; }
@@ -14,8 +15,9 @@ namespace AcademicGuard.Models
         public TimeSpan Hora_inicio { get; set; }
         public TimeSpan Hora_fin { get; set; }
         public bool Horario_habilitado { get; set; }
+        public string Estado { get; set; }
 
-        //[JsonIgnore]
-        //public Curso Curso { get; set; }
+        [JsonIgnore]
+        public Curso Curso { get; set; }
     }
 }
