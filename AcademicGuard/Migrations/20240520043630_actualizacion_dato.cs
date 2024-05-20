@@ -7,7 +7,7 @@ using MySql.EntityFrameworkCore.Metadata;
 namespace AcademicGuard.Migrations
 {
     /// <inheritdoc />
-    public partial class cambios_en_cs_dto : Migration
+    public partial class actualizacion_dato : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
