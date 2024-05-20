@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AcademicGuard.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240520005459_cambios_en_cs_dto")]
-    partial class cambios_en_cs_dto
+    [Migration("20240520043630_actualizacion_dato")]
+    partial class actualizacion_dato
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
