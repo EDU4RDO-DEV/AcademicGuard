@@ -25,9 +25,16 @@ namespace AcademicGuard.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<string>("Asitencia")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<string>("Estado")
                         .IsRequired()
-                        .HasColumnType("varchar(1)");
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("Fecha")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<int>("Id_coordinador")
                         .HasColumnType("int");
@@ -64,6 +71,10 @@ namespace AcademicGuard.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<int>("Id_coordinador")
                         .HasColumnType("int");
 
@@ -86,6 +97,10 @@ namespace AcademicGuard.Migrations
                     b.Property<int>("Id_contacto")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<int>("Id_detalle_persona")
                         .HasColumnType("int");
@@ -114,6 +129,10 @@ namespace AcademicGuard.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Especialidad")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Estado")
                         .IsRequired()
                         .HasColumnType("longtext");
 
@@ -147,6 +166,10 @@ namespace AcademicGuard.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<int>("Id_coordinador")
                         .HasColumnType("int");
 
@@ -174,6 +197,10 @@ namespace AcademicGuard.Migrations
                     b.Property<int>("Id_detalle_persona")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<int>("Id_persona")
                         .HasColumnType("int");
@@ -209,6 +236,10 @@ namespace AcademicGuard.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<int>("Id_detalle_persona")
                         .HasColumnType("int");
 
@@ -234,6 +265,10 @@ namespace AcademicGuard.Migrations
                     b.Property<int>("Año_ingreso")
                         .HasColumnType("int");
 
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<int>("Id_persona")
                         .HasColumnType("int");
 
@@ -249,6 +284,10 @@ namespace AcademicGuard.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Dia")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Estado")
                         .IsRequired()
                         .HasColumnType("longtext");
 
@@ -274,6 +313,10 @@ namespace AcademicGuard.Migrations
                     b.Property<int>("Id_jornada")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<int>("Id_curso")
                         .HasColumnType("int");
@@ -304,7 +347,11 @@ namespace AcademicGuard.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<bool>("Estado")
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<bool>("Estado_aceptacion")
                         .HasColumnType("tinyint(1)");
 
                     b.Property<DateTime>("Fecha_respuesta")
@@ -346,6 +393,10 @@ namespace AcademicGuard.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("Dpi")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Estado")
                         .IsRequired()
                         .HasColumnType("longtext");
 
@@ -404,6 +455,10 @@ namespace AcademicGuard.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<string>("Fecha_contratacion")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -426,6 +481,10 @@ namespace AcademicGuard.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<int>("Id_usuario")
                         .HasColumnType("int");
 
@@ -444,12 +503,16 @@ namespace AcademicGuard.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<int>("Id_curso")
                         .HasColumnType("int");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasColumnType("varchar(1)");
+                        .HasColumnType("longtext");
 
                     b.Property<int>("Numero_estudiantes")
                         .HasColumnType("int");
@@ -481,8 +544,18 @@ namespace AcademicGuard.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("Fecha_creacion")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<int>("Id_detalle_persona")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("Ultima_conexion")
+                        .HasColumnType("datetime(6)");
 
                     b.HasKey("Id_usuario");
 

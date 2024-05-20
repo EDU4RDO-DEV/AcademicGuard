@@ -7,6 +7,7 @@ namespace AcademicGuard.Models
     public class Profesor
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id_profesor { get; set; }
         [ForeignKey("Persona")]
         public int Id_persona { get; set; }
@@ -14,7 +15,9 @@ namespace AcademicGuard.Models
         public string Especialidad { get; set; }
         public string Fecha_contratacion { get; set; }
 
-        //[JsonIgnore]
-        //public Persona Persona { get; set; }
+        public string Estado { get; set; }
+
+        [JsonIgnore]
+        public Persona Persona { get; set; }
     }
 }

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AcademicGuard.DataContext;
 using AcademicGuard.Models;
+using AcademicGuard.Models.Dto;
 
 namespace AcademicGuard.Controllers
 {
@@ -45,12 +46,21 @@ namespace AcademicGuard.Controllers
         // PUT: api/DetallePersona/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutDetallePersona(int id, DetallePersona detallePersona)
+        public async Task<IActionResult> PutDetallePersona(int id, DetallePersonaDto detallePersonaDto)
         {
-            if (id != detallePersona.Id_detalle_persona)
+            if (id != detallePersonaDto.Id_detalle_persona)
             {
                 return BadRequest();
             }
+
+            var detallePersona = await _context.DetallePersona.FindAsync(id);
+            if (detallePersona == null)
+            {
+                return NotFound();
+            }
+
+            detallePersona.Id_persona = detallePersonaDto.Id_persona;
+            detallePersona.Estado = detallePersonaDto.Estado;
 
             _context.Entry(detallePersona).State = EntityState.Modified;
 
@@ -76,8 +86,14 @@ namespace AcademicGuard.Controllers
         // POST: api/DetallePersona
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<DetallePersona>> PostDetallePersona(DetallePersona detallePersona)
+        public async Task<ActionResult<DetallePersona>> PostDetallePersona(DetallePersonaDto detallePersonaDto)
         {
+            var detallePersona = new DetallePersona
+            {
+                Id_persona = detallePersonaDto.Id_persona,
+                Estado = detallePersonaDto.Estado
+            };
+
             _context.DetallePersona.Add(detallePersona);
             await _context.SaveChangesAsync();
 

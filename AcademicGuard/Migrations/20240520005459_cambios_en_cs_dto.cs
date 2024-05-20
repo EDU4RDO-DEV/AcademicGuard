@@ -7,31 +7,38 @@ using MySql.EntityFrameworkCore.Metadata;
 namespace AcademicGuard.Migrations
 {
     /// <inheritdoc />
-    public partial class Contacto : Migration
+    public partial class cambios_en_cs_dto : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AlterDatabase()
+                .Annotation("MySQL:Charset", "utf8mb4");
+
             migrationBuilder.CreateTable(
-                name: "Contacto",
+                name: "Personas",
                 columns: table => new
                 {
-                    Id_contacto = table.Column<int>(type: "int", nullable: false)
+                    Id_persona = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    Id_detalle_persona = table.Column<int>(type: "int", nullable: false),
-                    Telefono_1 = table.Column<string>(type: "longtext", nullable: false),
-                    Telefono_2 = table.Column<string>(type: "longtext", nullable: false),
-                    Telefono_casa = table.Column<string>(type: "longtext", nullable: false)
+                    Dpi = table.Column<string>(type: "longtext", nullable: false),
+                    Primer_nombre = table.Column<string>(type: "longtext", nullable: false),
+                    Segundo_nombre = table.Column<string>(type: "longtext", nullable: false),
+                    Nombres_extras = table.Column<string>(type: "longtext", nullable: false),
+                    Primer_apellido = table.Column<string>(type: "longtext", nullable: false),
+                    Segundo_apellido = table.Column<string>(type: "longtext", nullable: false),
+                    Apellidos_extras = table.Column<string>(type: "longtext", nullable: false),
+                    Sexo = table.Column<string>(type: "longtext", nullable: false),
+                    Fecha_nacimiento = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    Persona_habilitada = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    Fecha_creacion = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    Fecha_modificacion = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    Usuario_modificacion = table.Column<string>(type: "longtext", nullable: false),
+                    Estado = table.Column<string>(type: "longtext", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Contacto", x => x.Id_contacto);
-                    table.ForeignKey(
-                        name: "FK_Contacto_DetallePersona_Id_detalle_persona",
-                        column: x => x.Id_detalle_persona,
-                        principalTable: "DetallePersona",
-                        principalColumn: "Id_detalle_persona",
-                        onDelete: ReferentialAction.Cascade);
+                    table.PrimaryKey("PK_Personas", x => x.Id_persona);
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
 
@@ -45,7 +52,8 @@ namespace AcademicGuard.Migrations
                     Titulo = table.Column<string>(type: "longtext", nullable: false),
                     Especialidad = table.Column<string>(type: "longtext", nullable: false),
                     Fecha_contratacion = table.Column<string>(type: "longtext", nullable: false),
-                    Periodo_mandato = table.Column<string>(type: "longtext", nullable: false)
+                    Periodo_mandato = table.Column<string>(type: "longtext", nullable: false),
+                    Estado = table.Column<string>(type: "longtext", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -60,28 +68,22 @@ namespace AcademicGuard.Migrations
                 .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Direccion",
+                name: "DetallePersona",
                 columns: table => new
                 {
-                    Id_direccion = table.Column<int>(type: "int", nullable: false)
+                    Id_detalle_persona = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    Id_detalle_persona = table.Column<int>(type: "int", nullable: false),
-                    Calle = table.Column<string>(type: "longtext", nullable: false),
-                    Avenida = table.Column<string>(type: "longtext", nullable: false),
-                    Barrio = table.Column<string>(type: "longtext", nullable: false),
-                    Zona = table.Column<string>(type: "longtext", nullable: false),
-                    Municipio = table.Column<string>(type: "longtext", nullable: false),
-                    Departamento = table.Column<string>(type: "longtext", nullable: false),
-                    Codigo_postal = table.Column<string>(type: "longtext", nullable: false)
+                    Id_persona = table.Column<int>(type: "int", nullable: false),
+                    Estado = table.Column<string>(type: "longtext", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Direccion", x => x.Id_direccion);
+                    table.PrimaryKey("PK_DetallePersona", x => x.Id_detalle_persona);
                     table.ForeignKey(
-                        name: "FK_Direccion_DetallePersona_Id_detalle_persona",
-                        column: x => x.Id_detalle_persona,
-                        principalTable: "DetallePersona",
-                        principalColumn: "Id_detalle_persona",
+                        name: "FK_DetallePersona_Personas_Id_persona",
+                        column: x => x.Id_persona,
+                        principalTable: "Personas",
+                        principalColumn: "Id_persona",
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
@@ -93,7 +95,8 @@ namespace AcademicGuard.Migrations
                     Id_estudiante = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     Id_persona = table.Column<int>(type: "int", nullable: false),
-                    Año_ingreso = table.Column<int>(type: "int", nullable: false)
+                    Año_ingreso = table.Column<int>(type: "int", nullable: false),
+                    Estado = table.Column<string>(type: "longtext", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -116,7 +119,8 @@ namespace AcademicGuard.Migrations
                     Id_persona = table.Column<int>(type: "int", nullable: false),
                     Titulo = table.Column<string>(type: "longtext", nullable: false),
                     Especialidad = table.Column<string>(type: "longtext", nullable: false),
-                    Fecha_contratacion = table.Column<string>(type: "longtext", nullable: false)
+                    Fecha_contratacion = table.Column<string>(type: "longtext", nullable: false),
+                    Estado = table.Column<string>(type: "longtext", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -131,6 +135,58 @@ namespace AcademicGuard.Migrations
                 .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "Contacto",
+                columns: table => new
+                {
+                    Id_contacto = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    Id_detalle_persona = table.Column<int>(type: "int", nullable: false),
+                    Telefono_1 = table.Column<string>(type: "longtext", nullable: false),
+                    Telefono_2 = table.Column<string>(type: "longtext", nullable: false),
+                    Telefono_casa = table.Column<string>(type: "longtext", nullable: false),
+                    Estado = table.Column<string>(type: "longtext", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Contacto", x => x.Id_contacto);
+                    table.ForeignKey(
+                        name: "FK_Contacto_DetallePersona_Id_detalle_persona",
+                        column: x => x.Id_detalle_persona,
+                        principalTable: "DetallePersona",
+                        principalColumn: "Id_detalle_persona",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Direccion",
+                columns: table => new
+                {
+                    Id_direccion = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    Id_detalle_persona = table.Column<int>(type: "int", nullable: false),
+                    Calle = table.Column<string>(type: "longtext", nullable: false),
+                    Avenida = table.Column<string>(type: "longtext", nullable: false),
+                    Barrio = table.Column<string>(type: "longtext", nullable: false),
+                    Zona = table.Column<string>(type: "longtext", nullable: false),
+                    Municipio = table.Column<string>(type: "longtext", nullable: false),
+                    Departamento = table.Column<string>(type: "longtext", nullable: false),
+                    Codigo_postal = table.Column<string>(type: "longtext", nullable: false),
+                    Estado = table.Column<string>(type: "longtext", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Direccion", x => x.Id_direccion);
+                    table.ForeignKey(
+                        name: "FK_Direccion_DetallePersona_Id_detalle_persona",
+                        column: x => x.Id_detalle_persona,
+                        principalTable: "DetallePersona",
+                        principalColumn: "Id_detalle_persona",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "Usuario",
                 columns: table => new
                 {
@@ -138,7 +194,10 @@ namespace AcademicGuard.Migrations
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     Id_detalle_persona = table.Column<int>(type: "int", nullable: false),
                     Correo_institucional = table.Column<string>(type: "longtext", nullable: false),
-                    Contraseña = table.Column<string>(type: "longtext", nullable: false)
+                    Clave = table.Column<string>(type: "longtext", nullable: false),
+                    Fecha_creacion = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    Ultima_conexion = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    Estado = table.Column<string>(type: "longtext", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -161,7 +220,9 @@ namespace AcademicGuard.Migrations
                     Id_estudiante = table.Column<int>(type: "int", nullable: false),
                     Id_profesor = table.Column<int>(type: "int", nullable: false),
                     Id_coordinador = table.Column<int>(type: "int", nullable: false),
-                    Estado = table.Column<string>(type: "varchar(1)", nullable: false)
+                    Estado = table.Column<string>(type: "longtext", nullable: false),
+                    Asitencia = table.Column<string>(type: "longtext", nullable: false),
+                    Fecha = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -197,7 +258,8 @@ namespace AcademicGuard.Migrations
                     Id_estudiante = table.Column<int>(type: "int", nullable: false),
                     Id_coordinador = table.Column<int>(type: "int", nullable: false),
                     Nombre_curso = table.Column<string>(type: "longtext", nullable: false),
-                    Descripcion = table.Column<string>(type: "longtext", nullable: false)
+                    Descripcion = table.Column<string>(type: "longtext", nullable: false),
+                    Estado = table.Column<string>(type: "longtext", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -234,10 +296,11 @@ namespace AcademicGuard.Migrations
                     Id_coordinador = table.Column<int>(type: "int", nullable: false),
                     Motivo = table.Column<string>(type: "longtext", nullable: false),
                     Documento_adjunto = table.Column<string>(type: "longtext", nullable: false),
-                    Estado = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     Descripcion = table.Column<string>(type: "longtext", nullable: false),
                     Fecha_solicitud = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    Fecha_respuesta = table.Column<DateTime>(type: "datetime(6)", nullable: false)
+                    Fecha_respuesta = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    Estado = table.Column<string>(type: "longtext", nullable: false),
+                    Estado_aceptacion = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -270,7 +333,8 @@ namespace AcademicGuard.Migrations
                     Id_rol = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     Id_usuario = table.Column<int>(type: "int", nullable: false),
-                    Tipo_rol = table.Column<string>(type: "longtext", nullable: false)
+                    Tipo_rol = table.Column<string>(type: "longtext", nullable: false),
+                    Estado = table.Column<string>(type: "longtext", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -295,7 +359,8 @@ namespace AcademicGuard.Migrations
                     Nombre = table.Column<string>(type: "longtext", nullable: false),
                     Descripcion = table.Column<string>(type: "longtext", nullable: false),
                     Duracion = table.Column<string>(type: "longtext", nullable: false),
-                    Carrera_habilitada = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                    Carrera_habilitada = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    Estado = table.Column<string>(type: "longtext", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -325,7 +390,8 @@ namespace AcademicGuard.Migrations
                     Dia = table.Column<string>(type: "longtext", nullable: false),
                     Hora_inicio = table.Column<TimeSpan>(type: "time(6)", nullable: false),
                     Hora_fin = table.Column<TimeSpan>(type: "time(6)", nullable: false),
-                    Horario_habilitado = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                    Horario_habilitado = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    Estado = table.Column<string>(type: "longtext", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -347,7 +413,8 @@ namespace AcademicGuard.Migrations
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     Id_curso = table.Column<int>(type: "int", nullable: false),
                     Tipo_jornada = table.Column<string>(type: "longtext", nullable: false),
-                    Jornada_habilitada = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                    Jornada_habilitada = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    Estado = table.Column<string>(type: "longtext", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -368,10 +435,11 @@ namespace AcademicGuard.Migrations
                     Id_seccion = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     Id_curso = table.Column<int>(type: "int", nullable: false),
-                    Nombre = table.Column<string>(type: "varchar(1)", nullable: false),
+                    Nombre = table.Column<string>(type: "longtext", nullable: false),
                     Numero_semestre = table.Column<string>(type: "longtext", nullable: false),
                     Numero_estudiantes = table.Column<int>(type: "int", nullable: false),
-                    Seccion_habilitada = table.Column<string>(type: "longtext", nullable: false)
+                    Seccion_habilitada = table.Column<string>(type: "longtext", nullable: false),
+                    Estado = table.Column<string>(type: "longtext", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -434,6 +502,11 @@ namespace AcademicGuard.Migrations
                 name: "IX_Curso_Id_profesor",
                 table: "Curso",
                 column: "Id_profesor");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DetallePersona_Id_persona",
+                table: "DetallePersona",
+                column: "Id_persona");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Direccion_Id_detalle_persona",
@@ -528,6 +601,9 @@ namespace AcademicGuard.Migrations
                 name: "Curso");
 
             migrationBuilder.DropTable(
+                name: "DetallePersona");
+
+            migrationBuilder.DropTable(
                 name: "Coordinador");
 
             migrationBuilder.DropTable(
@@ -535,6 +611,9 @@ namespace AcademicGuard.Migrations
 
             migrationBuilder.DropTable(
                 name: "Profesor");
+
+            migrationBuilder.DropTable(
+                name: "Personas");
         }
     }
 }

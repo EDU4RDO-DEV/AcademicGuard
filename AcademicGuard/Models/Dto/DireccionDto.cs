@@ -1,15 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace AcademicGuard.Models
+namespace AcademicGuard.Models.Dto
 {
-    public class Direccion
+    public class DireccionDto
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id_direccion { get; set; }
-        [ForeignKey("DetallePersona")]
         public int Id_detalle_persona { get; set; }
         public string Calle { get; set; }
         public string Avenida { get; set; }
@@ -19,8 +14,5 @@ namespace AcademicGuard.Models
         public string Departamento { get; set; }
         public string Codigo_postal { get; set; }
         public string Estado { get; set; }
-
-        [JsonIgnore]
-        public DetallePersona DetallePersona { get; set; }
     }
 }

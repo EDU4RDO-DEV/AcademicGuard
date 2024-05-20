@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AcademicGuard.DataContext;
 using AcademicGuard.Models;
+using AcademicGuard.Models.Dto;
 
 namespace AcademicGuard.Controllers
 {
@@ -45,12 +46,26 @@ namespace AcademicGuard.Controllers
         // PUT: api/Carrera/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCarrera(int id, Carrera carrera)
+        public async Task<IActionResult> PutCarrera(int id, CarreraDto carreraDto)
         {
-            if (id != carrera.Id_carrera)
+            if (id != carreraDto.Id_carrera)
             {
                 return BadRequest();
             }
+
+            var carrera = await _context.Carrera.FindAsync(id);
+            if (carrera == null)
+            {
+                return NotFound();
+            }
+
+            carrera.Id_curso = carreraDto.Id_curso;
+            carrera.Id_coordinador = carreraDto.Id_coordinador;
+            carrera.Nombre = carreraDto.Nombre;
+            carrera.Descripcion = carreraDto.Descripcion;
+            carrera.Duracion = carreraDto.Duracion;
+            carrera.Carrera_habilitada = carreraDto.Carrera_habilitada;
+            carrera.Estado = carreraDto.Estado;
 
             _context.Entry(carrera).State = EntityState.Modified;
 
@@ -76,8 +91,19 @@ namespace AcademicGuard.Controllers
         // POST: api/Carrera
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Carrera>> PostCarrera(Carrera carrera)
+        public async Task<ActionResult<Carrera>> PostCarrera(CarreraDto carreraDto)
         {
+            var carrera = new Carrera
+            {
+                Id_curso = carreraDto.Id_curso,
+                Id_coordinador = carreraDto.Id_coordinador,
+                Nombre = carreraDto.Nombre,
+                Descripcion = carreraDto.Descripcion,
+                Duracion = carreraDto.Duracion,
+                Carrera_habilitada = carreraDto.Carrera_habilitada,
+                Estado = carreraDto.Estado
+            };
+
             _context.Carrera.Add(carrera);
             await _context.SaveChangesAsync();
 

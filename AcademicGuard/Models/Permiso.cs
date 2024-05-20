@@ -7,6 +7,7 @@ namespace AcademicGuard.Models
     public class Permiso
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id_permiso { get; set; }
         [ForeignKey("Estudiante")]
         public int Id_estudiante { get; set; }
@@ -16,16 +17,17 @@ namespace AcademicGuard.Models
         public int Id_coordinador { get; set; }
         public string Motivo { get; set; }
         public string Documento_adjunto { get; set; }
-        public bool Estado { get; set; }
         public string Descripcion { get; set; }
         public DateTime Fecha_solicitud { get; set; }
         public DateTime Fecha_respuesta { get; set; }
+        public string Estado { get; set; }
+        public bool Estado_aceptacion { get; set; }
 
         [JsonIgnore]
         public Estudiante Estudiante { get; set; }
         [JsonIgnore]
         public Profesor Profesor { get; set; }
-        //[JsonIgnore]
-        //public Coordinador Coordinador { get; set; }
+        [JsonIgnore]
+        public Coordinador Coordinador { get; set; }
     }
 }

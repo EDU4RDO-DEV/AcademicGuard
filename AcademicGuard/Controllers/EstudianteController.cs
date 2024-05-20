@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AcademicGuard.DataContext;
 using AcademicGuard.Models;
+using AcademicGuard.Models.Dto;
 
 namespace AcademicGuard.Controllers
 {
@@ -45,12 +46,22 @@ namespace AcademicGuard.Controllers
         // PUT: api/Estudiante/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutEstudiante(int id, Estudiante estudiante)
+        public async Task<IActionResult> PutEstudiante(int id, EstudianteDto estudianteDto)
         {
-            if (id != estudiante.Id_estudiante)
+            if (id != estudianteDto.Id_estudiante)
             {
                 return BadRequest();
             }
+
+            var estudiante = await _context.Estudiante.FindAsync(id);
+            if (estudiante == null)
+            {
+                return NotFound();
+            }
+
+            estudiante.Id_persona = estudianteDto.Id_persona;
+            estudiante.Año_ingreso = estudianteDto.Año_ingreso;
+            estudiante.Estado = estudianteDto.Estado;
 
             _context.Entry(estudiante).State = EntityState.Modified;
 
@@ -76,8 +87,15 @@ namespace AcademicGuard.Controllers
         // POST: api/Estudiante
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Estudiante>> PostEstudiante(Estudiante estudiante)
+        public async Task<ActionResult<Estudiante>> PostEstudiante(EstudianteDto estudianteDto)
         {
+            var estudiante = new Estudiante
+            {
+                Id_persona = estudianteDto.Id_persona,
+                Año_ingreso = estudianteDto.Año_ingreso,
+                Estado = estudianteDto.Estado
+            };
+
             _context.Estudiante.Add(estudiante);
             await _context.SaveChangesAsync();
 

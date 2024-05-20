@@ -7,12 +7,14 @@ namespace AcademicGuard.Models
     public class Estudiante
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id_estudiante { get; set; }
         [ForeignKey("Persona")]
         public int Id_persona { get; set; }
         public int Año_ingreso { get; set; }
+        public string Estado { get; set; }
 
-        //[JsonIgnore]
-        //public Persona Persona { get; set; }
+        [JsonIgnore]
+        public Persona Persona { get; set; }
     }
 }
