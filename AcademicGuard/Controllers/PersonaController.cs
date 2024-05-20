@@ -43,42 +43,15 @@ namespace AcademicGuard.Controllers
             return persona;
         }
 
-        //// PUT: api/Persona/5
-        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> PutPersona(int id, Persona persona)
-        //{
-        //    if (id != persona.Id_persona)
-        //    {
-        //        return BadRequest();
-        //    }
-
-        //    _context.Entry(persona).State = EntityState.Modified;
-
-        //    try
-        //    {
-        //        await _context.SaveChangesAsync();
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        if (!PersonaExists(id))
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
-
-        //    return NoContent();
-        //}
-
         // PUT: api/Persona/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPersona(int id, PersonaDto personaDto)
         {
+            if (id != personaDto.Id_persona)
+            {
+                return BadRequest();
+            }
+
             var persona = await _context.Personas.FindAsync(id);
             if (persona == null)
             {
@@ -118,18 +91,7 @@ namespace AcademicGuard.Controllers
             return NoContent();
         }
 
-        //// POST: api/Persona
-        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        //[HttpPost]
-        //public async Task<ActionResult<Persona>> PostPersona(Persona persona)
-        //{
-        //    _context.Personas.Add(persona);
-        //    await _context.SaveChangesAsync();
-
-        //    return CreatedAtAction("GetPersona", new { id = persona.Id_persona }, persona);
-        //}
         // POST: api/Persona
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Persona>> PostPersona(PersonaDto personaDto)
         {
@@ -155,7 +117,6 @@ namespace AcademicGuard.Controllers
 
             return CreatedAtAction("GetPersona", new { id = persona.Id_persona }, persona);
         }
-
 
         // DELETE: api/Persona/5
         [HttpDelete("{id}")]

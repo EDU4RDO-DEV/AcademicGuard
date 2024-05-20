@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AcademicGuard.DataContext;
 using AcademicGuard.Models;
+using AcademicGuard.Models.Dto;
 
 namespace AcademicGuard.Controllers
 {
@@ -43,14 +44,24 @@ namespace AcademicGuard.Controllers
         }
 
         // PUT: api/Jornada/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutJornada(int id, Jornada jornada)
+        public async Task<IActionResult> PutJornada(int id, JornadaDto jornadaDto)
         {
-            if (id != jornada.Id_jornada)
+            if (id != jornadaDto.Id_jornada)
             {
                 return BadRequest();
             }
+
+            var jornada = await _context.Jornada.FindAsync(id);
+            if (jornada == null)
+            {
+                return NotFound();
+            }
+
+            jornada.Id_curso = jornadaDto.Id_curso;
+            jornada.Tipo_jornada = jornadaDto.Tipo_jornada;
+            jornada.Jornada_habilitada = jornadaDto.Jornada_habilitada;
+            jornada.Estado = jornadaDto.Estado;
 
             _context.Entry(jornada).State = EntityState.Modified;
 
@@ -74,10 +85,17 @@ namespace AcademicGuard.Controllers
         }
 
         // POST: api/Jornada
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Jornada>> PostJornada(Jornada jornada)
+        public async Task<ActionResult<Jornada>> PostJornada(JornadaDto jornadaDto)
         {
+            var jornada = new Jornada
+            {
+                Id_curso = jornadaDto.Id_curso,
+                Tipo_jornada = jornadaDto.Tipo_jornada,
+                Jornada_habilitada = jornadaDto.Jornada_habilitada,
+                Estado = jornadaDto.Estado
+            };
+
             _context.Jornada.Add(jornada);
             await _context.SaveChangesAsync();
 

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AcademicGuard.DataContext;
 using AcademicGuard.Models;
+using AcademicGuard.Models.Dto;
 
 namespace AcademicGuard.Controllers
 {
@@ -45,12 +46,24 @@ namespace AcademicGuard.Controllers
         // PUT: api/Profesor/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProfesor(int id, Profesor profesor)
+        public async Task<IActionResult> PutProfesor(int id, ProfesorDto profesorDto)
         {
-            if (id != profesor.Id_profesor)
+            if (id != profesorDto.Id_profesor)
             {
                 return BadRequest();
             }
+
+            var profesor = await _context.Profesor.FindAsync(id);
+            if (profesor == null)
+            {
+                return NotFound();
+            }
+
+            profesor.Id_persona = profesorDto.Id_persona;
+            profesor.Titulo = profesorDto.Titulo;
+            profesor.Especialidad = profesorDto.Especialidad;
+            profesor.Fecha_contratacion = profesorDto.Fecha_contratacion;
+            profesor.Estado = profesorDto.Estado;
 
             _context.Entry(profesor).State = EntityState.Modified;
 
@@ -76,8 +89,17 @@ namespace AcademicGuard.Controllers
         // POST: api/Profesor
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Profesor>> PostProfesor(Profesor profesor)
+        public async Task<ActionResult<Profesor>> PostProfesor(ProfesorDto profesorDto)
         {
+            var profesor = new Profesor
+            {
+                Id_persona = profesorDto.Id_persona,
+                Titulo = profesorDto.Titulo,
+                Especialidad = profesorDto.Especialidad,
+                Fecha_contratacion = profesorDto.Fecha_contratacion,
+                Estado = profesorDto.Estado
+            };
+
             _context.Profesor.Add(profesor);
             await _context.SaveChangesAsync();
 
