@@ -52,17 +52,18 @@ namespace AcademicGuard.Controllers
             //{
             //    return BadRequest();
             //}
-
-
-            var asistencia = new Asistencia
+            var asistencia = await _context.Asistencia.FindAsync(id);
+            if (asistencia == null)
             {
-                Id_asistencia = asistenciaDto.Id_asistencia,
-                Id_estudiante = asistenciaDto.Id_estudiante,
-                Id_profesor = asistenciaDto.Id_profesor,
-                Id_coordinador = asistenciaDto.Id_coordinador,
-                Estado = asistenciaDto.Estado,
-                Asitencia = asistenciaDto.Asitencia,
-                Fecha = asistenciaDto.Fecha
+                return NotFound();
+            }
+            {
+                asistencia.Id_estudiante = asistenciaDto.Id_estudiante;
+                asistencia.Id_profesor = asistenciaDto.Id_profesor;
+                asistencia.Id_coordinador = asistenciaDto.Id_coordinador;
+                asistencia.Estado = asistenciaDto.Estado;
+                asistencia.Asitencia = asistenciaDto.Asitencia;
+                asistencia.Fecha = asistenciaDto.Fecha;
             };
 
             _context.Entry(asistencia).State = EntityState.Modified;
