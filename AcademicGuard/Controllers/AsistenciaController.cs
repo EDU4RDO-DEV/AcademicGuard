@@ -53,6 +53,7 @@ namespace AcademicGuard.Controllers
             //    return BadRequest();
             //}
 
+
             var asistencia = new Asistencia
             {
                 Id_asistencia = asistenciaDto.Id_asistencia,
