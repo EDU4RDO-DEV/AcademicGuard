@@ -48,10 +48,10 @@ namespace AcademicGuard.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutRol(int id, RolDto rolDto)
         {
-            if (id != rolDto.Id_rol)
-            {
-                return BadRequest();
-            }
+            //if (id != rolDto.Id_rol)
+            //{
+            //    return BadRequest();
+            //}
 
             var rol = await _context.Rol.FindAsync(id);
             if (rol == null)

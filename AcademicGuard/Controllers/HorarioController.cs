@@ -47,10 +47,10 @@ namespace AcademicGuard.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutHorario(int id, HorarioDto horarioDto)
         {
-            if (id != horarioDto.Id_horario)
-            {
-                return BadRequest();
-            }
+            //if (id != horarioDto.Id_horario)
+            //{
+            //    return BadRequest();
+            //}
 
             var horario = await _context.Horario.FindAsync(id);
             if (horario == null)

@@ -48,10 +48,10 @@ namespace AcademicGuard.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCoordinador(int id, CoordinadorDto coordinadorDto)
         {
-            if (id != coordinadorDto.Id_coordinador)
-            {
-                return BadRequest();
-            }
+            //if (id != coordinadorDto.Id_coordinador)
+            //{
+            //    return BadRequest();
+            //}
 
             var coordinador = await _context.Coordinador.FindAsync(id);
             if (coordinador == null)

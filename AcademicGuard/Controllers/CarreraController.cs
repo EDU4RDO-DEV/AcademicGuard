@@ -48,10 +48,10 @@ namespace AcademicGuard.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCarrera(int id, CarreraDto carreraDto)
         {
-            if (id != carreraDto.Id_carrera)
-            {
-                return BadRequest();
-            }
+            //if (id != carreraDto.Id_carrera)
+            //{
+            //    return BadRequest();
+            //}
 
             var carrera = await _context.Carrera.FindAsync(id);
             if (carrera == null)

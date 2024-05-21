@@ -47,10 +47,10 @@ namespace AcademicGuard.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutJornada(int id, JornadaDto jornadaDto)
         {
-            if (id != jornadaDto.Id_jornada)
-            {
-                return BadRequest();
-            }
+            //if (id != jornadaDto.Id_jornada)
+            //{
+            //    return BadRequest();
+            //}
 
             var jornada = await _context.Jornada.FindAsync(id);
             if (jornada == null)

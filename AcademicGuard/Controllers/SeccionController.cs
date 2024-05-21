@@ -48,10 +48,10 @@ namespace AcademicGuard.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutSeccion(int id, SeccionDto seccionDto)
         {
-            if (id != seccionDto.Id_seccion)
-            {
-                return BadRequest();
-            }
+            //if (id != seccionDto.Id_seccion)
+            //{
+            //    return BadRequest();
+            //}
 
             var seccion = await _context.Seccion.FindAsync(id);
             if (seccion == null)
