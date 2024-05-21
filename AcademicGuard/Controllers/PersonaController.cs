@@ -71,6 +71,7 @@ namespace AcademicGuard.Controllers
             persona.Fecha_creacion = personaDto.Fecha_creacion;
             persona.Fecha_modificacion = personaDto.Fecha_modificacion;
             persona.Usuario_modificacion = personaDto.Usuario_modificacion;
+            persona.Estado = personaDto.Estado;
 
             try
             {
@@ -109,8 +110,10 @@ namespace AcademicGuard.Controllers
                 Persona_habilitada = personaDto.Persona_habilitada,
                 Fecha_creacion = personaDto.Fecha_creacion,
                 Fecha_modificacion = personaDto.Fecha_modificacion,
-                Usuario_modificacion = personaDto.Usuario_modificacion
-            };
+                Usuario_modificacion = personaDto.Usuario_modificacion,
+                Estado = personaDto.Estado
+
+        };
 
             _context.Personas.Add(persona);
             await _context.SaveChangesAsync();
