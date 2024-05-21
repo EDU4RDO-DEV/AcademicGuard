@@ -25,7 +25,7 @@ catch (Exception ex)
     throw;
 }
 
-// Agregar CORS para permitir frontend
+// Agregar CORS para permitir frontend.
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("MyPolicy",
