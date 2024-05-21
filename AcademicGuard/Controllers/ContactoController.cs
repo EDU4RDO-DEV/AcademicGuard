@@ -48,10 +48,10 @@ namespace AcademicGuard.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutContacto(int id, ContactoDto contactoDto)
         {
-            if (id != contactoDto.Id_contacto)
-            {
-                return BadRequest();
-            }
+            //if (id != contactoDto.Id_contacto)
+            //{
+            //    return BadRequest();
+            //}
 
             var contacto = await _context.Contacto.FindAsync(id);
             if (contacto == null)

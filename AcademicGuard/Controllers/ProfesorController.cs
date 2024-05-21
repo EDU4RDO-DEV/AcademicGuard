@@ -48,10 +48,10 @@ namespace AcademicGuard.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutProfesor(int id, ProfesorDto profesorDto)
         {
-            if (id != profesorDto.Id_profesor)
-            {
-                return BadRequest();
-            }
+            //if (id != profesorDto.Id_profesor)
+            //{
+            //    return BadRequest();
+            //}
 
             var profesor = await _context.Profesor.FindAsync(id);
             if (profesor == null)

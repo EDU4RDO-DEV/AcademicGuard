@@ -48,10 +48,11 @@ namespace AcademicGuard.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAsistencia(int id, AsistenciaDto asistenciaDto)
         {
-            if (id != asistenciaDto.Id_asistencia)
-            {
-                return BadRequest();
-            }
+            //if (id != asistenciaDto.Id_asistencia)
+            //{
+            //    return BadRequest();
+            //}
+
 
             var asistencia = new Asistencia
             {

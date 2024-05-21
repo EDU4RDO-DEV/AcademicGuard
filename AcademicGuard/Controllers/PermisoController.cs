@@ -47,10 +47,10 @@ namespace AcademicGuard.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPermiso(int id, PermisoDto permisoDto)
         {
-            if (id != permisoDto.Id_permiso)
-            {
-                return BadRequest();
-            }
+            //if (id != permisoDto.Id_permiso)
+            //{
+            //    return BadRequest();
+            //}
 
             var permiso = await _context.Permiso.FindAsync(id);
             if (permiso == null)
