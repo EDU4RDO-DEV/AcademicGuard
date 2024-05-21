@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AcademicGuard.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240520043630_actualizacion_dato")]
-    partial class actualizacion_dato
+    [Migration("20240521035427_update20-05")]
+    partial class update2005
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -310,11 +310,13 @@ namespace AcademicGuard.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<TimeSpan>("Hora_fin")
-                        .HasColumnType("time(6)");
+                    b.Property<string>("Hora_fin")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
-                    b.Property<TimeSpan>("Hora_inicio")
-                        .HasColumnType("time(6)");
+                    b.Property<string>("Hora_inicio")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<bool>("Horario_habilitado")
                         .HasColumnType("tinyint(1)");

@@ -7,7 +7,7 @@ using MySql.EntityFrameworkCore.Metadata;
 namespace AcademicGuard.Migrations
 {
     /// <inheritdoc />
-    public partial class actualizacion_dato : Migration
+    public partial class update2005 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -388,8 +388,8 @@ namespace AcademicGuard.Migrations
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     Id_curso = table.Column<int>(type: "int", nullable: false),
                     Dia = table.Column<string>(type: "longtext", nullable: false),
-                    Hora_inicio = table.Column<TimeSpan>(type: "time(6)", nullable: false),
-                    Hora_fin = table.Column<TimeSpan>(type: "time(6)", nullable: false),
+                    Hora_inicio = table.Column<string>(type: "longtext", nullable: false),
+                    Hora_fin = table.Column<string>(type: "longtext", nullable: false),
                     Horario_habilitado = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     Estado = table.Column<string>(type: "longtext", nullable: false)
                 },

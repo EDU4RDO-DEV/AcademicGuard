@@ -47,6 +47,8 @@ namespace AcademicGuard.Migrations
 
                     b.HasKey("Id_asistencia");
 
+                    b.HasIndex("Id_coordinador");
+
                     b.HasIndex("Id_estudiante");
 
                     b.HasIndex("Id_profesor");
@@ -87,6 +89,8 @@ namespace AcademicGuard.Migrations
 
                     b.HasKey("Id_carrera");
 
+                    b.HasIndex("Id_coordinador");
+
                     b.HasIndex("Id_curso");
 
                     b.ToTable("Carrera");
@@ -118,6 +122,8 @@ namespace AcademicGuard.Migrations
                         .HasColumnType("longtext");
 
                     b.HasKey("Id_contacto");
+
+                    b.HasIndex("Id_detalle_persona");
 
                     b.ToTable("Contacto");
                 });
@@ -153,6 +159,8 @@ namespace AcademicGuard.Migrations
 
                     b.HasKey("Id_coordinador");
 
+                    b.HasIndex("Id_persona");
+
                     b.ToTable("Coordinador");
                 });
 
@@ -185,6 +193,8 @@ namespace AcademicGuard.Migrations
 
                     b.HasKey("Id_curso");
 
+                    b.HasIndex("Id_coordinador");
+
                     b.HasIndex("Id_estudiante");
 
                     b.HasIndex("Id_profesor");
@@ -206,6 +216,8 @@ namespace AcademicGuard.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id_detalle_persona");
+
+                    b.HasIndex("Id_persona");
 
                     b.ToTable("DetallePersona");
                 });
@@ -253,6 +265,8 @@ namespace AcademicGuard.Migrations
 
                     b.HasKey("Id_direccion");
 
+                    b.HasIndex("Id_detalle_persona");
+
                     b.ToTable("Direccion");
                 });
 
@@ -274,6 +288,8 @@ namespace AcademicGuard.Migrations
 
                     b.HasKey("Id_estudiante");
 
+                    b.HasIndex("Id_persona");
+
                     b.ToTable("Estudiante");
                 });
 
@@ -291,11 +307,13 @@ namespace AcademicGuard.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<TimeSpan>("Hora_fin")
-                        .HasColumnType("time(6)");
+                    b.Property<string>("Hora_fin")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
-                    b.Property<TimeSpan>("Hora_inicio")
-                        .HasColumnType("time(6)");
+                    b.Property<string>("Hora_inicio")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<bool>("Horario_habilitado")
                         .HasColumnType("tinyint(1)");
@@ -304,6 +322,8 @@ namespace AcademicGuard.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id_horario");
+
+                    b.HasIndex("Id_curso");
 
                     b.ToTable("Horario");
                 });
@@ -329,6 +349,8 @@ namespace AcademicGuard.Migrations
                         .HasColumnType("longtext");
 
                     b.HasKey("Id_jornada");
+
+                    b.HasIndex("Id_curso");
 
                     b.ToTable("Jornada");
                 });
@@ -374,6 +396,8 @@ namespace AcademicGuard.Migrations
                         .HasColumnType("longtext");
 
                     b.HasKey("Id_permiso");
+
+                    b.HasIndex("Id_coordinador");
 
                     b.HasIndex("Id_estudiante");
 
@@ -472,6 +496,8 @@ namespace AcademicGuard.Migrations
 
                     b.HasKey("Id_profesor");
 
+                    b.HasIndex("Id_persona");
+
                     b.ToTable("Profesor");
                 });
 
@@ -493,6 +519,8 @@ namespace AcademicGuard.Migrations
                         .HasColumnType("longtext");
 
                     b.HasKey("Id_rol");
+
+                    b.HasIndex("Id_usuario");
 
                     b.ToTable("Rol");
                 });
@@ -527,6 +555,8 @@ namespace AcademicGuard.Migrations
 
                     b.HasKey("Id_seccion");
 
+                    b.HasIndex("Id_curso");
+
                     b.ToTable("Seccion");
                 });
 
@@ -559,11 +589,19 @@ namespace AcademicGuard.Migrations
 
                     b.HasKey("Id_usuario");
 
+                    b.HasIndex("Id_detalle_persona");
+
                     b.ToTable("Usuario");
                 });
 
             modelBuilder.Entity("AcademicGuard.Models.Asistencia", b =>
                 {
+                    b.HasOne("AcademicGuard.Models.Coordinador", "Coordinador")
+                        .WithMany()
+                        .HasForeignKey("Id_coordinador")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("AcademicGuard.Models.Estudiante", "Estudiante")
                         .WithMany()
                         .HasForeignKey("Id_estudiante")
@@ -576,12 +614,115 @@ namespace AcademicGuard.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Coordinador");
+
                     b.Navigation("Estudiante");
 
                     b.Navigation("Profesor");
                 });
 
             modelBuilder.Entity("AcademicGuard.Models.Carrera", b =>
+                {
+                    b.HasOne("AcademicGuard.Models.Coordinador", "Coordinador")
+                        .WithMany()
+                        .HasForeignKey("Id_coordinador")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AcademicGuard.Models.Curso", "Curso")
+                        .WithMany()
+                        .HasForeignKey("Id_curso")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Coordinador");
+
+                    b.Navigation("Curso");
+                });
+
+            modelBuilder.Entity("AcademicGuard.Models.Contacto", b =>
+                {
+                    b.HasOne("AcademicGuard.Models.DetallePersona", "DetallePersona")
+                        .WithMany()
+                        .HasForeignKey("Id_detalle_persona")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DetallePersona");
+                });
+
+            modelBuilder.Entity("AcademicGuard.Models.Coordinador", b =>
+                {
+                    b.HasOne("AcademicGuard.Models.Persona", "Persona")
+                        .WithMany()
+                        .HasForeignKey("Id_persona")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Persona");
+                });
+
+            modelBuilder.Entity("AcademicGuard.Models.Curso", b =>
+                {
+                    b.HasOne("AcademicGuard.Models.Coordinador", "Coordinador")
+                        .WithMany()
+                        .HasForeignKey("Id_coordinador")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AcademicGuard.Models.Estudiante", "Estudiante")
+                        .WithMany()
+                        .HasForeignKey("Id_estudiante")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AcademicGuard.Models.Profesor", "Profesor")
+                        .WithMany()
+                        .HasForeignKey("Id_profesor")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Coordinador");
+
+                    b.Navigation("Estudiante");
+
+                    b.Navigation("Profesor");
+                });
+
+            modelBuilder.Entity("AcademicGuard.Models.DetallePersona", b =>
+                {
+                    b.HasOne("AcademicGuard.Models.Persona", "Persona")
+                        .WithMany()
+                        .HasForeignKey("Id_persona")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Persona");
+                });
+
+            modelBuilder.Entity("AcademicGuard.Models.Direccion", b =>
+                {
+                    b.HasOne("AcademicGuard.Models.DetallePersona", "DetallePersona")
+                        .WithMany()
+                        .HasForeignKey("Id_detalle_persona")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DetallePersona");
+                });
+
+            modelBuilder.Entity("AcademicGuard.Models.Estudiante", b =>
+                {
+                    b.HasOne("AcademicGuard.Models.Persona", "Persona")
+                        .WithMany()
+                        .HasForeignKey("Id_persona")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Persona");
+                });
+
+            modelBuilder.Entity("AcademicGuard.Models.Horario", b =>
                 {
                     b.HasOne("AcademicGuard.Models.Curso", "Curso")
                         .WithMany()
@@ -592,8 +733,25 @@ namespace AcademicGuard.Migrations
                     b.Navigation("Curso");
                 });
 
-            modelBuilder.Entity("AcademicGuard.Models.Curso", b =>
+            modelBuilder.Entity("AcademicGuard.Models.Jornada", b =>
                 {
+                    b.HasOne("AcademicGuard.Models.Curso", "Curso")
+                        .WithMany()
+                        .HasForeignKey("Id_curso")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Curso");
+                });
+
+            modelBuilder.Entity("AcademicGuard.Models.Permiso", b =>
+                {
+                    b.HasOne("AcademicGuard.Models.Coordinador", "Coordinador")
+                        .WithMany()
+                        .HasForeignKey("Id_coordinador")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("AcademicGuard.Models.Estudiante", "Estudiante")
                         .WithMany()
                         .HasForeignKey("Id_estudiante")
@@ -605,29 +763,56 @@ namespace AcademicGuard.Migrations
                         .HasForeignKey("Id_profesor")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Coordinador");
 
                     b.Navigation("Estudiante");
 
                     b.Navigation("Profesor");
                 });
 
-            modelBuilder.Entity("AcademicGuard.Models.Permiso", b =>
+            modelBuilder.Entity("AcademicGuard.Models.Profesor", b =>
                 {
-                    b.HasOne("AcademicGuard.Models.Estudiante", "Estudiante")
+                    b.HasOne("AcademicGuard.Models.Persona", "Persona")
                         .WithMany()
-                        .HasForeignKey("Id_estudiante")
+                        .HasForeignKey("Id_persona")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AcademicGuard.Models.Profesor", "Profesor")
+                    b.Navigation("Persona");
+                });
+
+            modelBuilder.Entity("AcademicGuard.Models.Rol", b =>
+                {
+                    b.HasOne("AcademicGuard.Models.Usuario", "Usuario")
                         .WithMany()
-                        .HasForeignKey("Id_profesor")
+                        .HasForeignKey("Id_usuario")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Estudiante");
+                    b.Navigation("Usuario");
+                });
 
-                    b.Navigation("Profesor");
+            modelBuilder.Entity("AcademicGuard.Models.Seccion", b =>
+                {
+                    b.HasOne("AcademicGuard.Models.Curso", "Curso")
+                        .WithMany()
+                        .HasForeignKey("Id_curso")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Curso");
+                });
+
+            modelBuilder.Entity("AcademicGuard.Models.Usuario", b =>
+                {
+                    b.HasOne("AcademicGuard.Models.DetallePersona", "DetallePersona")
+                        .WithMany()
+                        .HasForeignKey("Id_detalle_persona")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DetallePersona");
                 });
 #pragma warning restore 612, 618
         }
