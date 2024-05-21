@@ -2,7 +2,7 @@
 {
     public class PersonaDto
     {
-        public int Id_persona { get; set; }
+        //public int Id_persona { get; set; }
         public string Dpi { get; set; }
         public string Primer_nombre { get; set; }
         public string Segundo_nombre { get; set; }
