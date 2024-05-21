@@ -2,7 +2,7 @@
 {
     public class AsistenciaDto
     {
-        public int Id_asistencia { get; set; }
+       // public int Id_asistencia { get; set; }
         public int Id_estudiante { get; set; }
         public int Id_profesor { get; set; }
         public int Id_coordinador { get; set; }

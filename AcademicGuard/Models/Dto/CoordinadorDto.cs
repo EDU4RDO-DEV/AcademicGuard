@@ -4,7 +4,7 @@ namespace AcademicGuard.Models.Dto
 {
     public class CoordinadorDto
     {
-        public int Id_coordinador { get; set; }
+      //  public int Id_coordinador { get; set; }
         public int Id_persona { get; set; }
         public string Titulo { get; set; }
         public string Especialidad { get; set; }

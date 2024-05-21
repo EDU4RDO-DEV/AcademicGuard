@@ -4,7 +4,7 @@ namespace AcademicGuard.Models.Dto
 {
     public class PermisoDto
     {
-        public int Id_permiso { get; set; }
+      //  public int Id_permiso { get; set; }
         public int Id_estudiante { get; set; }
         public int Id_profesor { get; set; }
         public int Id_coordinador { get; set; }

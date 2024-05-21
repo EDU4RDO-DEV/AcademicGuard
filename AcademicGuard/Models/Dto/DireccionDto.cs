@@ -4,7 +4,7 @@ namespace AcademicGuard.Models.Dto
 {
     public class DireccionDto
     {
-        public int Id_direccion { get; set; }
+     //   public int Id_direccion { get; set; }
         public int Id_detalle_persona { get; set; }
         public string Calle { get; set; }
         public string Avenida { get; set; }

@@ -4,7 +4,7 @@ namespace AcademicGuard.Models.Dto
 {
     public class CursoDto
     {
-        public int Id_curso { get; set; }
+      //  public int Id_curso { get; set; }
         public int Id_profesor { get; set; }
         public int Id_estudiante { get; set; }
         public int Id_coordinador { get; set; }
