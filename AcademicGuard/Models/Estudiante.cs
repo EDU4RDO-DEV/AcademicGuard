@@ -13,6 +13,8 @@ namespace AcademicGuard.Models
         public int Id_persona { get; set; }
         public int Año_ingreso { get; set; }
         public string Estado { get; set; }
+        public string Carne { get; set; } 
+
 
         [JsonIgnore]
         public Persona Persona { get; set; }

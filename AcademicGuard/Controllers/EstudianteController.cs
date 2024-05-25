@@ -8,9 +8,12 @@ using Microsoft.EntityFrameworkCore;
 using AcademicGuard.DataContext;
 using AcademicGuard.Models;
 using AcademicGuard.Models.Dto;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace AcademicGuard.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class EstudianteController : ControllerBase
@@ -62,6 +65,7 @@ namespace AcademicGuard.Controllers
             estudiante.Id_persona = estudianteDto.Id_persona;
             estudiante.Año_ingreso = estudianteDto.Año_ingreso;
             estudiante.Estado = estudianteDto.Estado;
+            estudiante.Carne = estudianteDto.Carne;
 
             _context.Entry(estudiante).State = EntityState.Modified;
 
@@ -93,7 +97,8 @@ namespace AcademicGuard.Controllers
             {
                 Id_persona = estudianteDto.Id_persona,
                 Año_ingreso = estudianteDto.Año_ingreso,
-                Estado = estudianteDto.Estado
+                Estado = estudianteDto.Estado,
+                Carne = estudianteDto.Carne
             };
 
             _context.Estudiante.Add(estudiante);
@@ -121,6 +126,42 @@ namespace AcademicGuard.Controllers
         private bool EstudianteExists(int id)
         {
             return _context.Estudiante.Any(e => e.Id_estudiante == id);
+        }
+
+        // GET: api/Estudiante/ObtenerDatos
+        [HttpGet("ObtenerDatos")]
+        public ActionResult<List<EstudianteDetalle>> ObtenerDatosEstudiantes()
+        {
+            var estudiantes = new List<EstudianteDetalle>();
+
+            using (var command = _context.Database.GetDbConnection().CreateCommand())
+            {
+                command.CommandText = "ObtenerDatosEstudiantes";
+                command.CommandType = CommandType.StoredProcedure;
+                _context.Database.OpenConnection();
+
+                using (var result = command.ExecuteReader())
+                {
+                    while (result.Read())
+                    {
+                        estudiantes.Add(new EstudianteDetalle
+                        {
+                            IdEstudiante = result.GetInt32(0),
+                            NombreCompleto = result.GetString(1),
+                            Dpi = result.GetString(2),
+                            Sexo = result.GetString(3),
+                            FechaNacimiento = result.GetDateTime(4),
+                            AñoIngreso = result.GetInt32(5),
+                            Estado = result.GetString(6),
+                            Carne = result.GetString(7)
+                        });
+                    }
+                }
+
+                _context.Database.CloseConnection();
+            }
+
+            return estudiantes;
         }
     }
 }

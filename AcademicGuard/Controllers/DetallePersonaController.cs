@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using AcademicGuard.DataContext;
 using AcademicGuard.Models;
 using AcademicGuard.Models.Dto;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AcademicGuard.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class DetallePersonaController : ControllerBase

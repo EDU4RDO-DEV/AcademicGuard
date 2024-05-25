@@ -1,16 +1,20 @@
 using AcademicGuard.DataContext;
 using Microsoft.EntityFrameworkCore;
-using System;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Cargar el archivo de configuración
 builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 
-// Add services to the container.
-
 // Configurar cadena de conexion
 var connectionString = builder.Configuration.GetConnectionString("Connection");
+if (connectionString == null)
+{
+    throw new Exception("La cadena de conexión 'Connection' no está configurada correctamente en appsettings.json");
+}
 
 // Configurar DbContext
 try
@@ -25,6 +29,28 @@ catch (Exception ex)
     throw;
 }
 
+// Agregar autenticación JWT
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        var jwtKey = builder.Configuration["Jwt:Key"];
+        if (jwtKey == null)
+        {
+            throw new Exception("La clave JWT no está configurada correctamente en appsettings.json");
+        }
+
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidAudience = builder.Configuration["Jwt:Issuer"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
+        };
+    });
+
 // Agregar CORS para permitir frontend.
 builder.Services.AddCors(options =>
 {
@@ -35,6 +61,12 @@ builder.Services.AddCors(options =>
                    .AllowAnyHeader()
                    .AllowAnyMethod();
         });
+});
+
+// Agregar proveedor de registro de consola
+builder.Services.AddLogging(logging =>
+{
+    logging.AddConsole();
 });
 
 builder.Services.AddControllers();

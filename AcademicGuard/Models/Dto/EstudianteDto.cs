@@ -8,5 +8,6 @@ namespace AcademicGuard.Models.Dto
         public int Id_persona { get; set; }
         public int Año_ingreso { get; set; }
         public string Estado { get; set; }
+        public string Carne { get; set; }
     }
 }

@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AcademicGuard.DataContext;
 using AcademicGuard.Models;
 using AcademicGuard.Models.Dto;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace AcademicGuard.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UsuarioController : ControllerBase
@@ -48,11 +47,6 @@ namespace AcademicGuard.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUsuario(int id, UsuarioDto usuarioDto)
         {
-            //if (id != usuarioDto.Id_usuario)
-            //{
-            //    return BadRequest();
-            //}
-
             var usuario = await _context.Usuario.FindAsync(id);
             if (usuario == null)
             {
@@ -61,7 +55,7 @@ namespace AcademicGuard.Controllers
 
             usuario.Id_detalle_persona = usuarioDto.Id_detalle_persona;
             usuario.Correo_institucional = usuarioDto.Correo_institucional;
-            usuario.Clave = usuarioDto.Clave;
+            usuario.Clave = GeneratePasswordHash(usuarioDto.Clave, usuarioDto.Correo_institucional);
             usuario.Fecha_creacion = usuarioDto.Fecha_creacion;
             usuario.Ultima_conexion = usuarioDto.Ultima_conexion;
             usuario.Estado = usuarioDto.Estado;
@@ -96,7 +90,7 @@ namespace AcademicGuard.Controllers
             {
                 Id_detalle_persona = usuarioDto.Id_detalle_persona,
                 Correo_institucional = usuarioDto.Correo_institucional,
-                Clave = usuarioDto.Clave,
+                Clave = GeneratePasswordHash(usuarioDto.Clave, usuarioDto.Correo_institucional),
                 Fecha_creacion = usuarioDto.Fecha_creacion,
                 Ultima_conexion = usuarioDto.Ultima_conexion,
                 Estado = usuarioDto.Estado
@@ -127,6 +121,13 @@ namespace AcademicGuard.Controllers
         private bool UsuarioExists(int id)
         {
             return _context.Usuario.Any(e => e.Id_usuario == id);
+        }
+
+        private string GeneratePasswordHash(string password, string salt)
+        {
+            var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(salt));
+            var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+            return Convert.ToBase64String(hash);
         }
     }
 }
