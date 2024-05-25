@@ -7,9 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AcademicGuard.DataContext;
 using AcademicGuard.Models;
+using AcademicGuard.Models.Dto;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AcademicGuard.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CoordinadorController : ControllerBase
@@ -45,12 +48,25 @@ namespace AcademicGuard.Controllers
         // PUT: api/Coordinador/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCoordinador(int id, Coordinador coordinador)
+        public async Task<IActionResult> PutCoordinador(int id, CoordinadorDto coordinadorDto)
         {
-            if (id != coordinador.Id_coordinador)
+            //if (id != coordinadorDto.Id_coordinador)
+            //{
+            //    return BadRequest();
+            //}
+
+            var coordinador = await _context.Coordinador.FindAsync(id);
+            if (coordinador == null)
             {
-                return BadRequest();
+                return NotFound();
             }
+
+            coordinador.Id_persona = coordinadorDto.Id_persona;
+            coordinador.Titulo = coordinadorDto.Titulo;
+            coordinador.Especialidad = coordinadorDto.Especialidad;
+            coordinador.Fecha_contratacion = coordinadorDto.Fecha_contratacion;
+            coordinador.Periodo_mandato = coordinadorDto.Periodo_mandato;
+            coordinador.Estado = coordinadorDto.Estado;
 
             _context.Entry(coordinador).State = EntityState.Modified;
 
@@ -76,8 +92,18 @@ namespace AcademicGuard.Controllers
         // POST: api/Coordinador
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Coordinador>> PostCoordinador(Coordinador coordinador)
+        public async Task<ActionResult<Coordinador>> PostCoordinador(CoordinadorDto coordinadorDto)
         {
+            var coordinador = new Coordinador
+            {
+                Id_persona = coordinadorDto.Id_persona,
+                Titulo = coordinadorDto.Titulo,
+                Especialidad = coordinadorDto.Especialidad,
+                Fecha_contratacion = coordinadorDto.Fecha_contratacion,
+                Periodo_mandato = coordinadorDto.Periodo_mandato,
+                Estado = coordinadorDto.Estado
+            };
+
             _context.Coordinador.Add(coordinador);
             await _context.SaveChangesAsync();
 

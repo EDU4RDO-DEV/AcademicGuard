@@ -7,9 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AcademicGuard.DataContext;
 using AcademicGuard.Models;
+using AcademicGuard.Models.Dto;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AcademicGuard.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CursoController : ControllerBase
@@ -45,12 +48,25 @@ namespace AcademicGuard.Controllers
         // PUT: api/Curso/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCurso(int id, Curso curso)
+        public async Task<IActionResult> PutCurso(int id, CursoDto cursoDto)
         {
-            if (id != curso.Id_curso)
+            //if (id != cursoDto.Id_curso)
+            //{
+            //    return BadRequest();
+            //}
+
+            var curso = await _context.Curso.FindAsync(id);
+            if (curso == null)
             {
-                return BadRequest();
+                return NotFound();
             }
+
+            curso.Id_profesor = cursoDto.Id_profesor;
+            curso.Id_estudiante = cursoDto.Id_estudiante;
+            curso.Id_coordinador = cursoDto.Id_coordinador;
+            curso.Nombre_curso = cursoDto.Nombre_curso;
+            curso.Descripcion = cursoDto.Descripcion;
+            curso.Estado = cursoDto.Estado;
 
             _context.Entry(curso).State = EntityState.Modified;
 
@@ -76,8 +92,18 @@ namespace AcademicGuard.Controllers
         // POST: api/Curso
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Curso>> PostCurso(Curso curso)
+        public async Task<ActionResult<Curso>> PostCurso(CursoDto cursoDto)
         {
+            var curso = new Curso
+            {
+                Id_profesor = cursoDto.Id_profesor,
+                Id_estudiante = cursoDto.Id_estudiante,
+                Id_coordinador = cursoDto.Id_coordinador,
+                Nombre_curso = cursoDto.Nombre_curso,
+                Descripcion = cursoDto.Descripcion,
+                Estado = cursoDto.Estado
+            };
+
             _context.Curso.Add(curso);
             await _context.SaveChangesAsync();
 

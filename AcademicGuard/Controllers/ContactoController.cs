@@ -7,9 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AcademicGuard.DataContext;
 using AcademicGuard.Models;
+using AcademicGuard.Models.Dto;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AcademicGuard.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ContactoController : ControllerBase
@@ -45,12 +48,24 @@ namespace AcademicGuard.Controllers
         // PUT: api/Contacto/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutContacto(int id, Contacto contacto)
+        public async Task<IActionResult> PutContacto(int id, ContactoDto contactoDto)
         {
-            if (id != contacto.Id_contacto)
+            //if (id != contactoDto.Id_contacto)
+            //{
+            //    return BadRequest();
+            //}
+
+            var contacto = await _context.Contacto.FindAsync(id);
+            if (contacto == null)
             {
-                return BadRequest();
+                return NotFound();
             }
+
+            contacto.Id_detalle_persona = contactoDto.Id_detalle_persona;
+            contacto.Telefono_1 = contactoDto.Telefono_1;
+            contacto.Telefono_2 = contactoDto.Telefono_2;
+            contacto.Telefono_casa = contactoDto.Telefono_casa;
+            contacto.Estado = contactoDto.Estado;
 
             _context.Entry(contacto).State = EntityState.Modified;
 
@@ -76,8 +91,17 @@ namespace AcademicGuard.Controllers
         // POST: api/Contacto
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Contacto>> PostContacto(Contacto contacto)
+        public async Task<ActionResult<Contacto>> PostContacto(ContactoDto contactoDto)
         {
+            var contacto = new Contacto
+            {
+                Id_detalle_persona = contactoDto.Id_detalle_persona,
+                Telefono_1 = contactoDto.Telefono_1,
+                Telefono_2 = contactoDto.Telefono_2,
+                Telefono_casa = contactoDto.Telefono_casa,
+                Estado = contactoDto.Estado
+            };
+
             _context.Contacto.Add(contacto);
             await _context.SaveChangesAsync();
 

@@ -7,9 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AcademicGuard.DataContext;
 using AcademicGuard.Models;
+using AcademicGuard.Models.Dto;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AcademicGuard.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class SeccionController : ControllerBase
@@ -45,12 +48,25 @@ namespace AcademicGuard.Controllers
         // PUT: api/Seccion/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutSeccion(int id, Seccion seccion)
+        public async Task<IActionResult> PutSeccion(int id, SeccionDto seccionDto)
         {
-            if (id != seccion.Id_seccion)
+            //if (id != seccionDto.Id_seccion)
+            //{
+            //    return BadRequest();
+            //}
+
+            var seccion = await _context.Seccion.FindAsync(id);
+            if (seccion == null)
             {
-                return BadRequest();
+                return NotFound();
             }
+
+            seccion.Id_curso = seccionDto.Id_curso;
+            seccion.Nombre = seccionDto.Nombre;
+            seccion.Numero_semestre = seccionDto.Numero_semestre;
+            seccion.Numero_estudiantes = seccionDto.Numero_estudiantes;
+            seccion.Seccion_habilitada = seccionDto.Seccion_habilitada;
+            seccion.Estado = seccionDto.Estado;
 
             _context.Entry(seccion).State = EntityState.Modified;
 
@@ -76,8 +92,18 @@ namespace AcademicGuard.Controllers
         // POST: api/Seccion
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Seccion>> PostSeccion(Seccion seccion)
+        public async Task<ActionResult<Seccion>> PostSeccion(SeccionDto seccionDto)
         {
+            var seccion = new Seccion
+            {
+                Id_curso = seccionDto.Id_curso,
+                Nombre = seccionDto.Nombre,
+                Numero_semestre = seccionDto.Numero_semestre,
+                Numero_estudiantes = seccionDto.Numero_estudiantes,
+                Seccion_habilitada = seccionDto.Seccion_habilitada,
+                Estado = seccionDto.Estado
+            };
+
             _context.Seccion.Add(seccion);
             await _context.SaveChangesAsync();
 

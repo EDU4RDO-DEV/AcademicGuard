@@ -21,5 +21,6 @@ namespace AcademicGuard.Models
         public DateTime Fecha_creacion { get; set; }
         public DateTime Fecha_modificacion { get; set; }
         public string Usuario_modificacion { get; set; }
+        public string Estado {  get; set; }
     }
 }

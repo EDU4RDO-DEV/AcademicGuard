@@ -7,9 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AcademicGuard.DataContext;
 using AcademicGuard.Models;
+using AcademicGuard.Models.Dto;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AcademicGuard.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class DireccionController : ControllerBase
@@ -45,12 +48,28 @@ namespace AcademicGuard.Controllers
         // PUT: api/Direccion/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutDireccion(int id, Direccion direccion)
+        public async Task<IActionResult> PutDireccion(int id, DireccionDto direccionDto)
         {
-            if (id != direccion.Id_direccion)
+            //if (id != direccionDto.Id_direccion)
+            //{
+            //    return BadRequest();
+            //}
+
+            var direccion = await _context.Direccion.FindAsync(id);
+            if (direccion == null)
             {
-                return BadRequest();
+                return NotFound();
             }
+
+            direccion.Id_detalle_persona = direccionDto.Id_detalle_persona;
+            direccion.Calle = direccionDto.Calle;
+            direccion.Avenida = direccionDto.Avenida;
+            direccion.Barrio = direccionDto.Barrio;
+            direccion.Zona = direccionDto.Zona;
+            direccion.Municipio = direccionDto.Municipio;
+            direccion.Departamento = direccionDto.Departamento;
+            direccion.Codigo_postal = direccionDto.Codigo_postal;
+            direccion.Estado = direccionDto.Estado;
 
             _context.Entry(direccion).State = EntityState.Modified;
 
@@ -76,8 +95,21 @@ namespace AcademicGuard.Controllers
         // POST: api/Direccion
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Direccion>> PostDireccion(Direccion direccion)
+        public async Task<ActionResult<Direccion>> PostDireccion(DireccionDto direccionDto)
         {
+            var direccion = new Direccion
+            {
+                Id_detalle_persona = direccionDto.Id_detalle_persona,
+                Calle = direccionDto.Calle,
+                Avenida = direccionDto.Avenida,
+                Barrio = direccionDto.Barrio,
+                Zona = direccionDto.Zona,
+                Municipio = direccionDto.Municipio,
+                Departamento = direccionDto.Departamento,
+                Codigo_postal = direccionDto.Codigo_postal,
+                Estado = direccionDto.Estado
+            };
+
             _context.Direccion.Add(direccion);
             await _context.SaveChangesAsync();
 

@@ -7,9 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AcademicGuard.DataContext;
 using AcademicGuard.Models;
+using AcademicGuard.Models.Dto;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AcademicGuard.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class RolController : ControllerBase
@@ -45,12 +48,22 @@ namespace AcademicGuard.Controllers
         // PUT: api/Rol/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutRol(int id, Rol rol)
+        public async Task<IActionResult> PutRol(int id, RolDto rolDto)
         {
-            if (id != rol.Id_rol)
+            //if (id != rolDto.Id_rol)
+            //{
+            //    return BadRequest();
+            //}
+
+            var rol = await _context.Rol.FindAsync(id);
+            if (rol == null)
             {
-                return BadRequest();
+                return NotFound();
             }
+
+            rol.Id_usuario = rolDto.Id_usuario;
+            rol.Tipo_rol = rolDto.Tipo_rol;
+            rol.Estado = rolDto.Estado;
 
             _context.Entry(rol).State = EntityState.Modified;
 
@@ -76,8 +89,15 @@ namespace AcademicGuard.Controllers
         // POST: api/Rol
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Rol>> PostRol(Rol rol)
+        public async Task<ActionResult<Rol>> PostRol(RolDto rolDto)
         {
+            var rol = new Rol
+            {
+                Id_usuario = rolDto.Id_usuario,
+                Tipo_rol = rolDto.Tipo_rol,
+                Estado = rolDto.Estado
+            };
+
             _context.Rol.Add(rol);
             await _context.SaveChangesAsync();
 

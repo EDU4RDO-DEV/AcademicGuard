@@ -7,9 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AcademicGuard.DataContext;
 using AcademicGuard.Models;
+using AcademicGuard.Models.Dto;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AcademicGuard.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class PermisoController : ControllerBase
@@ -43,14 +46,30 @@ namespace AcademicGuard.Controllers
         }
 
         // PUT: api/Permiso/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPermiso(int id, Permiso permiso)
+        public async Task<IActionResult> PutPermiso(int id, PermisoDto permisoDto)
         {
-            if (id != permiso.Id_permiso)
+            //if (id != permisoDto.Id_permiso)
+            //{
+            //    return BadRequest();
+            //}
+
+            var permiso = await _context.Permiso.FindAsync(id);
+            if (permiso == null)
             {
-                return BadRequest();
+                return NotFound();
             }
+
+            permiso.Id_estudiante = permisoDto.Id_estudiante;
+            permiso.Id_profesor = permisoDto.Id_profesor;
+            permiso.Id_coordinador = permisoDto.Id_coordinador;
+            permiso.Motivo = permisoDto.Motivo;
+            permiso.Documento_adjunto = permisoDto.Documento_adjunto;
+            permiso.Descripcion = permisoDto.Descripcion;
+            permiso.Fecha_solicitud = permisoDto.Fecha_solicitud;
+            permiso.Fecha_respuesta = permisoDto.Fecha_respuesta;
+            permiso.Estado = permisoDto.Estado;
+            permiso.Estado_aceptacion = permisoDto.Estado_aceptacion;
 
             _context.Entry(permiso).State = EntityState.Modified;
 
@@ -74,10 +93,23 @@ namespace AcademicGuard.Controllers
         }
 
         // POST: api/Permiso
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Permiso>> PostPermiso(Permiso permiso)
+        public async Task<ActionResult<Permiso>> PostPermiso(PermisoDto permisoDto)
         {
+            var permiso = new Permiso
+            {
+                Id_estudiante = permisoDto.Id_estudiante,
+                Id_profesor = permisoDto.Id_profesor,
+                Id_coordinador = permisoDto.Id_coordinador,
+                Motivo = permisoDto.Motivo,
+                Documento_adjunto = permisoDto.Documento_adjunto,
+                Descripcion = permisoDto.Descripcion,
+                Fecha_solicitud = permisoDto.Fecha_solicitud,
+                Fecha_respuesta = permisoDto.Fecha_respuesta,
+                Estado = permisoDto.Estado,
+                Estado_aceptacion = permisoDto.Estado_aceptacion
+            };
+
             _context.Permiso.Add(permiso);
             await _context.SaveChangesAsync();
 

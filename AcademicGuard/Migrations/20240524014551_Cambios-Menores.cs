@@ -5,7 +5,7 @@
 namespace AcademicGuard.Migrations
 {
     /// <inheritdoc />
-    public partial class DetallePersona : Migration
+    public partial class CambiosMenores : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

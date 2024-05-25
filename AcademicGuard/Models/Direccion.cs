@@ -1,11 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace AcademicGuard.Models
 {
     public class Direccion
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id_direccion { get; set; }
         [ForeignKey("DetallePersona")]
         public int Id_detalle_persona { get; set; }
@@ -16,7 +18,9 @@ namespace AcademicGuard.Models
         public string Municipio { get; set; }
         public string Departamento { get; set; }
         public string Codigo_postal { get; set; }
+        public string Estado { get; set; }
 
-        //public DetallePersona DetallePersona { get; set; }
+        [JsonIgnore]
+        public DetallePersona DetallePersona { get; set; }
     }
 }

@@ -7,9 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AcademicGuard.DataContext;
 using AcademicGuard.Models;
+using AcademicGuard.Models.Dto;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AcademicGuard.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class HorarioController : ControllerBase
@@ -43,14 +46,26 @@ namespace AcademicGuard.Controllers
         }
 
         // PUT: api/Horario/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutHorario(int id, Horario horario)
+        public async Task<IActionResult> PutHorario(int id, HorarioDto horarioDto)
         {
-            if (id != horario.Id_horario)
+            //if (id != horarioDto.Id_horario)
+            //{
+            //    return BadRequest();
+            //}
+
+            var horario = await _context.Horario.FindAsync(id);
+            if (horario == null)
             {
-                return BadRequest();
+                return NotFound();
             }
+
+            horario.Id_curso = horarioDto.Id_curso;
+            horario.Dia = horarioDto.Dia;
+            horario.Hora_inicio = horarioDto.Hora_inicio;
+            horario.Hora_fin = horarioDto.Hora_fin;
+            horario.Horario_habilitado = horarioDto.Horario_habilitado;
+            horario.Estado = horarioDto.Estado;
 
             _context.Entry(horario).State = EntityState.Modified;
 
@@ -74,10 +89,19 @@ namespace AcademicGuard.Controllers
         }
 
         // POST: api/Horario
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Horario>> PostHorario(Horario horario)
+        public async Task<ActionResult<Horario>> PostHorario(HorarioDto horarioDto)
         {
+            var horario = new Horario
+            {
+                Id_curso = horarioDto.Id_curso,
+                Dia = horarioDto.Dia,
+                Hora_inicio = horarioDto.Hora_inicio,
+                Hora_fin = horarioDto.Hora_fin,
+                Horario_habilitado = horarioDto.Horario_habilitado,
+                Estado = horarioDto.Estado
+            };
+
             _context.Horario.Add(horario);
             await _context.SaveChangesAsync();
 
